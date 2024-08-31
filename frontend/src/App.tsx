@@ -10,13 +10,12 @@ import { io, Socket } from "socket.io-client";
 import "styles/base.css";
 import "./style.css";
 
-const socketUrl = import.meta.env.VITE_SOCKET_URL || "http://localhost:3000";
+const socketUrl = process.env.VITE_SOCKET_URL || "http://localhost:3000";
 
 function App() {
   const [tiles, setTiles] = useState(Array(9).fill(null));
   const [playerTurn, setPlayerTurn] = useState(PLAYER_X);
   const [strikeClass, setStrikeClass] = useState("");
-  const [currentPlayer, setCurrentPlayer] = useState<Player | null>(null);
   const [activePlayer, setActivePlayer] = useState<Player | null>(null);
   const [allPlayers, setAllPlayers] = useState<Player[] | null>(null);
   const [gameState, setGameState] = useState(PROGRESS_STATE);
@@ -26,8 +25,10 @@ function App() {
 
   useEffect(() => {
     const newSocket = io(socketUrl);
+
     setSocket(newSocket);
 
+    newSocket.connect();
     newSocket.on("connect", () => {
       // console.log("Connected to the server:", newSocket.id);
     });
@@ -51,7 +52,6 @@ function App() {
         setPlayerTurn(PLAYER_X); // Ensure X always starts first
       }
       setWaitingForPlayer(false);
-      setCurrentPlayer(player);
 
       // Reset the game state when a new game starts
       setGameState(PROGRESS_STATE);
@@ -95,9 +95,6 @@ function App() {
     setGameState,
 
     socket,
-
-    currentPlayer,
-    setCurrentPlayer,
 
     activePlayer,
     setActivePlayer,
