@@ -10,7 +10,7 @@ import { io, Socket } from "socket.io-client";
 import "styles/base.css";
 import "./style.css";
 
-const socketUrl = process.env.VITE_SOCKET_URL || "http://localhost:3000";
+const socketUrl = "https://tic-tac-triumph.onrender.com";
 
 function App() {
   const [tiles, setTiles] = useState(Array(9).fill(null));
