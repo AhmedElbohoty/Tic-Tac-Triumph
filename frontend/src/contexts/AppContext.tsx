@@ -22,8 +22,6 @@ export type AppContextType = {
   gameState: number;
   setGameState: React.Dispatch<React.SetStateAction<number>>;
   socket: Socket | null;
-  currentPlayer: Player | null;
-  setCurrentPlayer: React.Dispatch<React.SetStateAction<Player | null>>;
   activePlayer: Player | null;
   setActivePlayer: React.Dispatch<React.SetStateAction<Player | null>>;
   allPlayers: Player[] | null;
